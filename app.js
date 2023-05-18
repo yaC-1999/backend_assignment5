@@ -20,7 +20,6 @@ connection.connect((err) => {
 });
 
 app.get("/", (req, res) => {
-  console.log("hiiii");
   connection.query("SELECT * FROM users", function (err, result, fields) {
     if (err) {
       console.log(err);
@@ -69,6 +68,16 @@ app.post("/contact", (req, res) => {
   // );
 });
 
+app.get("/:id", (req, res) => {
+  connection.query("SELECT * FROM users", function (err, result, fields) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(result.find(r=> r.id == req.params.id));
+    }
+  });
+});
+
 app.listen(port, (err) => {
   if (err) {
     console.log(err);
@@ -76,3 +85,4 @@ app.listen(port, (err) => {
     console.log(`On port ${port}`);
   }
 });
+
