@@ -69,13 +69,17 @@ app.post("/contact", (req, res) => {
 });
 
 app.get("/contact/:id", (req, res) => {
-  connection.query("SELECT * FROM users", function (err, result, fields) {
-    if (err) {
-      console.log(err);
-    } else {
-      res.send(result.find((r) => r.id == req.params.id));
+  connection.query(
+    "SELECT * FROM users WHERE id=?",
+    req.params.id,
+    function (err, result, fields) {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(result);
+      }
     }
-  });
+  );
 });
 
 app.put("/contact/:id", (req, res) => {
@@ -99,15 +103,19 @@ app.put("/contact/:id", (req, res) => {
   );
 });
 
-app.delete('/contact/:id' , (req , res)=>{
-  connection.query('DELETE FROM users WHERE id=?', req.params.id, (err , result)=>{
-    if (err) {
-      console.log(err);
-    } else {
-      res.send("Deleted!");
+app.delete("/contact/:id", (req, res) => {
+  connection.query(
+    "DELETE FROM users WHERE id=?",
+    req.params.id,
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send("Deleted!");
+      }
     }
-  })
-})
+  );
+});
 
 app.listen(port, (err) => {
   if (err) {
