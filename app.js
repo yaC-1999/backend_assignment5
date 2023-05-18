@@ -73,12 +73,31 @@ app.get("/contact/:id", (req, res) => {
     if (err) {
       console.log(err);
     } else {
-      res.send(result.find(r=> r.id == req.params.id));
+      res.send(result.find((r) => r.id == req.params.id));
     }
   });
 });
 
-// app.put('/')
+app.put("/contact/:id", (req, res) => {
+  const id = req.params.id;
+  const first_name = req.body.first_name;
+  const last_name = req.body.last_name;
+  const phone_number = req.body.phone_number;
+  const work_number = req.body.work_number;
+
+  connection.query(
+    "UPDATE users SET first_name= ? , last_name= ? , phone_number= ? , work_number =? WHERE id=?",
+    [first_name, last_name, phone_number, work_number, req.params.id],
+    (err, result) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(result);
+        res.send("Updated!");
+      }
+    }
+  );
+});
 
 app.listen(port, (err) => {
   if (err) {
@@ -87,4 +106,3 @@ app.listen(port, (err) => {
     console.log(`On port ${port}`);
   }
 });
-
