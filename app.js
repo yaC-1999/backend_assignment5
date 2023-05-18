@@ -68,7 +68,7 @@ app.post("/contact", (req, res) => {
   // );
 });
 
-app.get("/:id", (req, res) => {
+app.get("/contact/:id", (req, res) => {
   connection.query("SELECT * FROM users", function (err, result, fields) {
     if (err) {
       console.log(err);
@@ -77,6 +77,8 @@ app.get("/:id", (req, res) => {
     }
   });
 });
+
+// app.put('/')
 
 app.listen(port, (err) => {
   if (err) {
