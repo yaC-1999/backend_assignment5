@@ -99,6 +99,16 @@ app.put("/contact/:id", (req, res) => {
   );
 });
 
+app.delete('/contact/:id' , (req , res)=>{
+  connection.query('DELETE FROM users WHERE id=?', req.params.id, (err , result)=>{
+    if (err) {
+      console.log(err);
+    } else {
+      res.send("Deleted!");
+    }
+  })
+})
+
 app.listen(port, (err) => {
   if (err) {
     console.log(err);
